@@ -55,9 +55,21 @@ const UserList = (props: Props) => {
         webSocket();
     }, [])
   return (
-    <div className={styles.userList}>
-        {data.map(user => <User user={user} />)}
-    </div>
+    <table className={styles.userList}>
+        <thead>
+        <tr>
+            <th>Photo</th>
+            <th>Name</th>
+            <th>Quote</th>
+            <th>Email</th>
+            <th>Created At</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        {data.map(user => {return <User user={user} />})}
+        </tbody>
+    </table>
   )
 }
 

@@ -3,6 +3,7 @@ import { supabase } from '@/utils/supabase/supabase';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
 import styles from "../../app/styles.module.css"
+import { useRouter } from 'next/navigation';
 
 type Props = {
     user : {
@@ -17,8 +18,13 @@ type Props = {
 
 const User = (props: Props) => {
     const [url, setUrl] = useState("");
+    const router = useRouter();
     const deleteUser = async() =>{
         await supabase.from('users').delete().eq("id", props.user.id);
+    }
+
+    const goToChatSpace = () => {
+        router.push("/chatSpace");
     }
 
     useEffect(()=>{
@@ -55,24 +61,39 @@ const User = (props: Props) => {
             } catch(error){
                 const {data} = await supabase.storage.from("images").getPublicUrl("userIcon/Frame 15.png");
                 setUrl(data.publicUrl);
-                console.log(0);
                 console.log(error);
             }
         }
         getURL();
     }, []);
   return (
-    <div className={styles.user}>
-    <div>
-        <Image src={url} alt='' width={50} height={50} />
-    </div>
-    <div>
-        {props.user.name}
-    </div>
-    <div onClick={deleteUser}>
-        <Image src={"/delete.png"} alt='' width={50} height={50}/>
-    </div>
-    </div>
+    <tr className={''}>
+        <td>
+            <Image src={url} width={50} height={50} alt='' style={{objectFit: "cover"}}/>
+        </td>
+        <td onClick={goToChatSpace}>
+            {props.user.name}
+        </td>
+        <td>
+            {props.user.quote}
+        </td>
+        <td>
+            {props.user.email}
+        </td>
+        <td>
+            {new Date(props.user.created_at).toLocaleString('ja-JP', {
+                timeZone: 'Asia/Tokyo',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            })}
+        </td>
+        <td onClick={deleteUser}>
+            <Image src={"/delete.png"} width={30} height={30} alt=''/>
+        </td>
+    </tr>
   )
 }
 
