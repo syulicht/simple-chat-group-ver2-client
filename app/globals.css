@@ -6,3 +6,17 @@ body {
     background: #E9FFF8;
     height: 100vh;
 }
+
+@keyframes loading {
+    to {
+        transform:rotate(360deg);
+    }
+}
+
+.loadingDiv {
+    margin-top: 100px;
+    border-radius: 50px;
+    width: 100px;
+    height: 100px;
+    animation: loading 2s infinite linear;
+}

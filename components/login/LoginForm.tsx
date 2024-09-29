@@ -10,6 +10,7 @@ type Props = {
 const LoginForm = (props: Props) => {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState("");
     const nameInput = useRef<HTMLInputElement>(null);
     const searchParams = useSearchParams()
     const router = useRouter();
@@ -30,7 +31,8 @@ const LoginForm = (props: Props) => {
             credentials: 'include',
           });
         if(!res.ok){
-            router.push("/");
+            router.push("/login");
+            setError("正しいパスワードを入力してください");
         } else {
             router.push("/chatGroup");
         }
@@ -47,6 +49,7 @@ const LoginForm = (props: Props) => {
         <input type='password' onChange={e => setPassword(e.target.value)}/>
       </div>
     <button type='submit'>Login</button>
+    <h6>{error}</h6>
 </form>
 
   )

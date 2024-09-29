@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import styles from "../../app/styles.module.css"
 import User from './User'
 import { headers } from 'next/headers'
+import Loading from '../Loading'
 
 type Props = {}
 
@@ -19,6 +20,7 @@ type User = {
 const UserList = (props: Props) => {
     const [data, setData] = useState<User[]>([]);
     const [image, setImage] = useState<{url: string, id: number}[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(()=>{
         const webSocket = () => {
@@ -35,13 +37,16 @@ const UserList = (props: Props) => {
             } catch(error){
                 console.log(error);
                 return;
+            } finally{
+                setLoading(false);
             }
         }
         firstget();
         webSocket();
     }, [])
   return (
-    <div className={styles.userList}>
+    <div className={styles.userList} style={loading?{overflow: 'hidden'} : {overflow: 'auto'}}>
+    {loading? <Loading /> :
     <table>
         <thead>
         <tr>
@@ -56,6 +61,7 @@ const UserList = (props: Props) => {
         {data.map(user => {return <User key={user.id} user={user} />})}
         </tbody>
     </table>
+    }
     </div>
   )
 }
