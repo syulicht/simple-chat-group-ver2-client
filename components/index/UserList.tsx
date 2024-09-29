@@ -38,7 +38,7 @@ const UserList = (props: Props) => {
                 console.log(error);
                 return;
             } finally{
-                setLoading(false);
+                setTimeout(() => setLoading(false), 1000);
             }
         }
         firstget();
