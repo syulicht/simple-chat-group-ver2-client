@@ -1,4 +1,5 @@
-import React from 'react'
+import { useRouter } from 'next/navigation';
+import React, { useEffect } from 'react'
 
 type Props = {}
 

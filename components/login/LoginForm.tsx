@@ -32,7 +32,7 @@ const LoginForm = (props: Props) => {
         if(!res.ok){
             router.push("/");
         } else {
-            router.push("/chatSpace");
+            router.push("/chatGroup");
         }
     }
   return (
